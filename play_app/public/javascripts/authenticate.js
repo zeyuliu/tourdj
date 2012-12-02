@@ -73,7 +73,7 @@ function initializelogin() {
 	login();
 	importToFirebase();
 	if (isLoggedIn()) {
-		if (window.location.href == "http://localhost:9000/") {
+		if (window.location.href == "http://localhost:9000/" || window.location.href == "http://localhost:9000/Home") {
 			window.location.href = '/drop';
 		};
 		

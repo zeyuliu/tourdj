@@ -13,7 +13,7 @@ var sanFrancisco = new google.maps.LatLng(sanFranciscoLatitude, sanFranciscoLong
 var DEF_ANIMATION = google.maps.Animation.DROP;
 
 var myDataRef = new Firebase('https://timur.firebaseio.com/');
-var UserInfo;
+var userInfo;
 var heatmap;
 var map;
 var userMarker;
@@ -220,7 +220,7 @@ function unmarkTours() {
     });
 }
 
-function getJSON() {
+function aggregateData(pos) {
     ACCESS_TOKEN = login();
     request_url = "https://api.singly.com/profile?access_token=" + ACCESS_TOKEN
     var info;
@@ -232,7 +232,8 @@ function getJSON() {
             dataType: "json",
             
             success: function (d) {
-                getJSONInfo(d);
+                
+                getJSONInfo(d, pos);
             },
 
             error: function () {
@@ -245,12 +246,17 @@ function getJSON() {
 }
 
 
-function getJSONInfo(user) {
+function getJSONInfo(user, pos) {
     var r = myDataRef.child('users').child(user.id);
     console.log(r.toString());
     r.once('value', function(snapshot) { 
+        
+        userInfo = snapshot.val();
+        var name = userInfo['name'];
+        params = "latitude=" + pos.lat() + "&longitude=" + pos.lng() + "&name=" + name;
         console.log(snapshot.val());
-        UserInfo = snapshot.val();
+        
+        window.location = "/gettour?" + params;
     });
 
 }
@@ -280,102 +286,6 @@ function placeMarkersOnMap(markers, map) {
 
 function commitLocation() {
     pos = userMarker['position'];
-    params = "latitude=" + pos.lat() + "&longitude=" + pos.lng();
-    window.location = "/gettour?" + params;
-}
-
-// Loads the heatmap
-function loadHeatMap(maparray, clear) {
+    aggregateData(pos);
     
-    console.log("in loadHeatMap");
-
-    var pointArray = new google.maps.MVCArray(maparray);
-        //console.log(sampleLocation.lat());
-        //myDataRef.push({id: i, latitude: sampleLocation.lat(), longitude: sampleLocation.lng()});
-        //myDataRef.on('value', function(snapshot){ 
-            //console.log("AA" + snapshot.val().latitude);
-        //});
-
-
-    return new google.maps.MVCArray(markerArray);
-}
-
-
-// Creates google maps "edible" points from a list of raw points.
-function toMapPts(points) {
-
-    console.log("toMapPts. points = ", points);
-    var mapPts = [];
-
-    for (var i = 0; i < points.length; ++i) {
-
-          if(loaded_points.indexOf(points[i].id) == -1) 
-          // first check if the point was already loaded into google maps
-          { 
-            // create the point and push it to the google map points array
-              //console.log("points[" + i + "] =", points[i].attributes);
-              var _lat = points[i].attributes.location.latitude;
-              var _lon = points[i].attributes.location.longitude;
-              var pt = {
-
-                location: new google.maps.LatLng(_lat, _lon),
-                weight: points[i].attributes.jam
-              } 
-            mapPts.push(pt);
-
-              // update the global variables
-            loaded_points.push(points[i].id);
-            all_points.push([pt, points[i]]);
-          }
-    }
-
-    return mapPts;
-}
-
-// Function that sends queries to Parse.com
-function ExecuteFirebase(){
-
-    console.log("ExecuteFirebase");
-
-    var half_an_hour = 1800;
-    var TimeShift = 3.5*3600;
-    var e = document.getElementById('select_time');
-    var future = e.options[e.selectedIndex].value;
-    var delta_time = (e.options[e.selectedIndex].value -1) * half_an_hour;
-    console.log("delta_time= " + delta_time);
-
-    var current_time = new Date().getTime() / 1000 - TimeShift;
-
-    var lessThan = current_time - delta_time + 2*half_an_hour ;
-    var greaterThan = current_time - delta_time;
-
-    console.log("timeinterval", greaterThan, lessThan);
-
-    
-
-    if (future == -1) {
-            var Jams = Parse.Object.extend("Jams_Predictions");
-            var query = new Parse.Query(Jams);
-    }
-
-    query.limit(1000);
-
-    query.find({
-        success: function(results) {
-        
-          console.log("Successfully retrieved " + results.length + " jams.");
-
-          loadHeatMap(toMapPts(results))//, position.coords.latitude, position.coords.longitude);
-        },
-        error: function(error) {
-          alert("Error: " + error.code + " " + error.message);
-    }
-});
-}
-
-function ReloadMaps() {
-    loaded_points=[];
-    all_points = [];
-    initialize();
-    //loadHeatMap(null,true);
 }

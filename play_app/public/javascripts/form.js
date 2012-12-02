@@ -9,10 +9,10 @@ function submit() {
     var params = window.location.search.split('&');
     var tLatitude = params[0].substring(params[0].indexOf('=') + 1);
     var tLongitude = params[1].substring(params[1].indexOf('=') + 1);
-    //var tName = params[2].substring(params[2].indexOf('=') + 1);
+    var tGuideName = params[2].substring(params[2].indexOf('=') + 1);
 
     
-    var tour = {name:tName, startTime:tStartTime, description:tDesc, audioURL:tAudio, videoURL:tVideo, latitude:tLatitude, longitude:tLongitude};//, tourGuideName:tName};
+    var tour = {name:tName, startTime:tStartTime, description:tDesc, audioURL:tAudio, videoURL:tVideo, latitude:tLatitude, longitude:tLongitude, tourGuideName:tGuideName};
     addTourToFirebase(tour);
     window.location = "/drop"
 }

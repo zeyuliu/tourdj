@@ -12,7 +12,7 @@ function submit() {
     var tGuideName = params[2].substring(params[2].indexOf('=') + 1);
     var tGuidePic = params[3].substring(params[3].indexOf('=') + 1);
     var totalDesc = "<table border='0'><tr><td><img src='" + tGuidePic + "' width='75px'></img></td><td><b>Guide:</b> " + tGuideName.replace('%20', ' ') + "<br><b>Description:</b> " + tDesc + "<br><b>Price:</b> " + "</td></tr></table>";
-    var tour = {name:tName, startTime:tStartTime, description:totalDesc, audioURL:tAudio, videoURL:tVideo, latitude:tLatitude, longitude:tLongitude, tourGuideName:tGuideName};
+    var tour = {name:tName, startTime:tStartTime, description: tDesc, totalDescription:totalDesc, audioURL:tAudio, videoURL:tVideo, latitude:tLatitude, longitude:tLongitude, tourGuideName:tGuideName, };
     addTourToFirebase(tour);
     window.location = "/drop"
 }

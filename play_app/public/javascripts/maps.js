@@ -264,14 +264,17 @@ function markTour(tour) {
     var newMarker = new google.maps.Marker(markerOptions);
     allMarkers.push(newMarker);
     
-    google.maps.event.addListener(newMarker, 'click', function(mouseEvent) {
+    google.maps.event.addListener(newMarker, 'mousemove', function(mouseEvent) {
                     infoWindowOptions = {
-                        content: tour['description']
+                        content: tour['totalDescription']
                     };
                     console.log(tour);
                     infoWindow = new google.maps.InfoWindow(infoWindowOptions);
                     infoWindow.open(map, newMarker);
-                    map.setCenter(newMarker.getPosition());
+                    
+    });
+    google.maps.event.addListener(newMarker, 'click', function(mouseEvent) {
+                    window.location = '/puttour?name=' + tour['name'];
     });
     return newMarker;
 }
@@ -291,5 +294,21 @@ function placeMarkersOnMap(markers, map) {
 function commitLocation() {
     pos = userMarker['position'];
     aggregateData(pos);
+    
+}
+
+function supplyInformation() {
+    var params = window.location.search.split('&');
+    var tour_name = params[0].substring(params[0].indexOf('=') + 1).replace('%20', ' ');
+    myDataRef.child('tours').child(tour_name).once('value', function(shot) {
+        var tour = shot.val();
+        document.getElementById('tour-name').innerHTML = tour_name;
+        document.getElementById('tour-description').innerHTML = tour['description'];
+        document.getElementById('tour-audio').innerHTML = tour['audio'];
+        document.getElementById('tour-image').src = tour['totalDescription'].substring(tour['totalDescription'].indexOf('src=') + 5, tour['totalDescription'].indexOf('width') - 2);
+        document.getElementById('tour-start-time').innerHTML = tour['startTime'];
+        document.getElementById('tour-video').innerHTML = tour['video'];
+        
+    });
     
 }

@@ -100,7 +100,7 @@ var all_points=[];
     //ExecuteParse();
     markTours();
     unmarkTours();
-    
+    tryAccess();
     // listener to map zoom events, updates the heatmap (calls CallParse) if the flag UPDATE_ON_MAP_ZOOM is true
     google.maps.event.addListener(map, 'zoom_changed', function() {
         nowTime = new Date().getTime();
@@ -220,6 +220,35 @@ function unmarkTours() {
             }
         }
     });
+}
+
+function getUserID() {
+    var accessToken = $.cookie('account');
+    
+    request_url = "https://api.singly.com/profile?access_token=" + accessToken;
+    if (accessToken) {
+        $.ajax({
+
+            url: request_url,
+            
+            dataType: "json",
+            
+            success: function (d) {
+                console.log(d['id']);
+                return d['id'];
+              
+            },
+
+            error: function () {
+                console.log("ERROR: Unable to fetch user data.");
+            }
+
+        });
+    }           
+}
+
+function tryAccess() {
+    myDataRef.child('users').once('value', function(shot) {console.log(shot.val())});
 }
 
 function markTour(tour) {

@@ -12,6 +12,12 @@
 
 
     </script>
+    <script type='text/javascript' src='https://static.firebase.com/v0/firebase.js'></script>
+    <script type="text/javascript"
+       src="https://maps.googleapis.com/maps/api/js?&sensor=false&libraries=visualization">
+    </script> 
+    <script src="/public/javascripts/maps.js"></script>
+    <script src="/public/javascripts/form.js"></script>
 
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 
@@ -134,7 +140,7 @@
 
            <!-- Submit Button -->
           <div id="tour-submit" class="span12" style="float:center; margin-top: 20px">
-            <a style="margin-right: 100px; width: 80px; float:right" class="btn btn-warning btntext btnmarg disabled" href="#" id="audio-upload">SUBMIT THE TOUR!</a>
+            <a style="margin-right: 100px; width: 80px; float:right" class="btn btn-warning btntext btnmarg disabled" href="#" id="audio-upload" onclick="submit()">SUBMIT THE TOUR!</a>
           </div>
 
         </div>

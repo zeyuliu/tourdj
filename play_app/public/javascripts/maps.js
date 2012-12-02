@@ -177,8 +177,9 @@ function ptsToMarkers(pts) {
 }
 
 function commitLocation() {
-    params['position'] = userMarker['position'];
-    window.location = "/drop";
+    pos = userMarker['position'];
+    params = "latitude=" + pos.lat() + "&longitude=" + pos.lng();
+    window.location = "/drop?" + params;
 }
 
 // Loads the heatmap

@@ -265,8 +265,9 @@ function markTour(tour) {
     allMarkers.push(newMarker);
     
     google.maps.event.addListener(newMarker, 'mousemove', function(mouseEvent) {
+                    var combined = tour['totalDescription'] + '<br><b>People Signed up:</b> ' + tour['signed_up'];
                     infoWindowOptions = {
-                        content: tour['totalDescription']
+                        content: combined
                     };
                     console.log(tour);
                     infoWindow = new google.maps.InfoWindow(infoWindowOptions);
@@ -279,11 +280,16 @@ function markTour(tour) {
     return newMarker;
 }
 
-function addUserToTour(user_id, tour_id, loc) {
-    myDataRef.child('tours').child(loc).child(tour_id).once('value', function(shot) {var tour = shot.val()});
-    tour['signed_up'] = (parseInt(tour['signed_up']) + 1).toString();
-    myDataRef.child('tours').child(loc).child(tour_id).set(tour);
+function addUserToTour() {
+    var params = window.location.search.split('&');
+    var tour_name = params[0].substring(params[0].indexOf('=') + 1).replace(/%20/g, ' ');
+    myDataRef.child('tours').child(tour_name).once('value', function(shot) {
+        myDataRef.child('tours').child(tour_name).child('signed_up').set(parseInt(shot.val()['signed_up']) + 1);
+        window.location = '/';
+    });
+    
 }
+
 
 function placeMarkersOnMap(markers, map) {
     for (var i = 0; i < markers.length(); i++) {
@@ -299,7 +305,7 @@ function commitLocation() {
 
 function supplyInformation() {
     var params = window.location.search.split('&');
-    var tour_name = params[0].substring(params[0].indexOf('=') + 1).replace('%20', ' ');
+    var tour_name = params[0].substring(params[0].indexOf('=') + 1).replace(/%20/g, ' ');
     myDataRef.child('tours').child(tour_name).once('value', function(shot) {
         var tour = shot.val();
         document.getElementById('tour-name').innerHTML = tour_name;

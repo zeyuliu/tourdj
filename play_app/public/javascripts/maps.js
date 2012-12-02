@@ -72,7 +72,7 @@ var all_points=[];
 
     // set up map options
     var mapOptions = {
-        zoom: 12,
+        zoom: 13,
         center: center,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
                         mapTypeControl: false,

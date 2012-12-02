@@ -50,8 +50,8 @@ var all_points=[];
     var styles = [
       {
         stylers: [
-          { hue: "#0A2389" },
-          { saturation: -10 }
+          { hue: "#00E2FF" },
+          { saturation: -5 }
         ]
       },{
         featureType: "road",
@@ -76,6 +76,8 @@ var all_points=[];
         mapTypeId: google.maps.MapTypeId.ROADMAP,
                         mapTypeControl: false,
                         streetViewControl: false,
+                        panControl: false,
+                        zoomControl: false,
                         styles: styles
     };
 

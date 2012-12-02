@@ -4,14 +4,6 @@
 <!-- HEAD -->
   <head>
     <script src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
-    <script type = "text/javascript">
-      function login() {
-        var button = document.getElementById('login')
-        window.open ("https://api.singly.com/oauth/authorize?client_id=176be91da9c1b06fa18ce0ec18241419&service=facebook&redirect_uri=http://localhost:9000%2Fauthorized.html&scope=email&response_type=token","Login","menubar=1,resizable=1,width=700,height=500");
-      }
-
-
-    </script>
 
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 
@@ -21,7 +13,6 @@
       body { height: 100%; margin: 0; padding: 0 }
       #map_canvas { height: 100% }
     </style>
-
     
     <!-- Google Maps init -->
     <script type="text/javascript"
@@ -69,7 +60,7 @@
 
 
                 <!-- <a style="margin-right: 10px; width: 80px" class="btn btn-yellow btntext btnmarg" href="#" id="signup"></i>Sign Up</a> -->
-                <a style="margin-right: 100px; width: 80px" class="btn btn-warning btntext btnmarg" href="javascript:login()" id="login"></i>Login</a>
+                <a style="margin-right: 100px; width: 80px" class="btn btn-warning btntext btnmarg" href= "https://api.singly.com/oauth/authorize?client_id=176be91da9c1b06fa18ce0ec18241419&service=facebook&redirect_uri=http://localhost:9000%2Fdrop&scope=email&response_type=token" id="login"></i>Login</a>
 
             </div>
          </div>

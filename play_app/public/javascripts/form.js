@@ -11,7 +11,7 @@ function submit() {
     var tLongitude = params[1].substring(params[1].indexOf('=') + 1);
     var tGuideName = params[2].substring(params[2].indexOf('=') + 1);
     var tGuidePic = params[3].substring(params[3].indexOf('=') + 1);
-    var totalDesc = "<table border='1'><tr><td><img src='" + tGuidePic + "' width='50px'></img></td></tr><tr><td>Guide: " + tGuideName.replace('%20', ' ') + "</td><td>Description: " + tDesc + "</td></tr></table>";
+    var totalDesc = "<table border='0'><tr><td><img src='" + tGuidePic + "' width='75px'></img></td><td><b>Guide:</b> " + tGuideName.replace('%20', ' ') + "<br><b>Description:</b> " + tDesc + "<br><b>Price:</b> " + "</td></tr></table>";
     var tour = {name:tName, startTime:tStartTime, description:totalDesc, audioURL:tAudio, videoURL:tVideo, latitude:tLatitude, longitude:tLongitude, tourGuideName:tGuideName};
     addTourToFirebase(tour);
     window.location = "/drop"

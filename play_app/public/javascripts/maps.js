@@ -9,8 +9,9 @@ var APPLICATION_ID = "IvhmmcSzZqySg27Bh50pEVn8aqUSvUNww09d0xkA";
 var JAVASCRIPT_KEY = "er7Hxr16oNQnK2PBYOaaW6k5k8alGxdCMrBnulAp";
 
 var UPDATE_ON_MAP_ZOOM = false;
-
-var sanFrancisco = new google.maps.LatLng(37.774546, -122.433523);
+var sanFranciscoLatitude = 37.77456;
+var sanFranciscoLongitude = -122.433523;
+var sanFrancisco = new google.maps.LatLng(sanFranciscoLatitude, sanFranciscoLongitude);
 
 var heatmap;
 /*
@@ -50,9 +51,16 @@ var all_points=[];
     var MIN_INTERVAL_MLSEC = 1800; 
     // initial zoom
     var current_zoom = 12;
+    
+    var markerArray = setSampleMarkers();
+    for (i = 0; i < markerArray.getLength(); i++){
+        markerArray.getAt(i).setMap(map)
+    }
 
     // Ask browser for it's location
-    ExecuteParse();
+    //ExecuteParse();
+    
+    
 
 
     // listener to map zoom events, updates the heatmap (calls CallParse) if the flag UPDATE_ON_MAP_ZOOM is true
@@ -84,9 +92,26 @@ var all_points=[];
     });
 }
 
-
+function setSampleMarkers(map) {
+	
+    var sampleNumber = 11;
+    var sampleDistance = .001;
+    var markerArray = new Array();
+	for (var i = 0; i < sampleNumber; i++) {
+        var offset = sampleDistance * (i - (sampleNumber / 2));
+        var sampleLocation = new google.maps.LatLng(sanFranciscoLatitude + offset, sanFranciscoLongitude + offset);
+	    var markerOptions = {
+	        visible: true,
+            position: sampleLocation,
+        };
+        markerArray[i] = new google.maps.Marker(markerOptions);
+	}
+    return new google.maps.MVCArray(markerArray);
+}
 // Loads the heatmap
 function loadHeatMap(maparray, clear) {
+    
+    
     
     console.log("in loadHeatMap");
 

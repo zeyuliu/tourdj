@@ -17,6 +17,7 @@ var myDataRef = new Firebase('https://timur.firebaseio.com/');
 var heatmap;
 var map;
 var userMarker;
+var allTours = [];
 var allMarkers = [];
 /*
 var testPointsData = toMapPts([
@@ -94,7 +95,8 @@ var all_points=[];
     userMarker.setMap(map);
     // Ask browser for it's location
     //ExecuteParse();
-    tours = markTours();
+    markTours();
+    unmarkTours();
     
     // listener to map zoom events, updates the heatmap (calls CallParse) if the flag UPDATE_ON_MAP_ZOOM is true
     google.maps.event.addListener(map, 'zoom_changed', function() {
@@ -187,8 +189,8 @@ function addTourToFirebase(tour) {
     myDataRef.child('tours').child(tour['name']).set(tour)
 }
 
-function removeTourFromFirebase(location, tour_id) {
-    myDataRef.child('tours').child(location).child(tour_id).remove()
+function removeTourFromFirebase(tour_id) {
+    myDataRef.child('tours').child(tour_id).remove()
 }
 
 function addUserToFirebase(user) {
@@ -198,9 +200,24 @@ function addUserToFirebase(user) {
 function markTours() {
     myDataRef.child('tours').on('value', function(shot) {
         for (var tour in shot.val()){
-            if (allMarkers.indexOf(tour) == -1){
+            if (allTours.indexOf(tour) == -1){
                 markTour(shot.val()[tour]);
-                allMarkers.push(tour)
+                allTours.push(tour)
+            }
+        }
+    });
+}
+
+function unmarkTours() {
+    myDataRef.child('tours').on('child_removed', function(shot) {
+        for (var i = 0; i < allTours.length; i++) {
+            if (allTours[i] == shot.val()['name']) {
+                console.log("hidsjfkj");
+                allMarkers[i].setVisible(false);
+                allMarkers[i].setMap(null);
+                allTours.splice(i, 1);
+                allMarkers.splice(i, 1);
+                break;
             }
         }
     });
@@ -214,7 +231,7 @@ function markTour(tour) {
         title: tour['desc'],
         map: map
     };
-    var marker = new google.maps.Marker(markerOptions);
+    allMarkers.push(new google.maps.Marker(markerOptions));
 }
 
 function addUserToTour(user_id, tour_id, loc) {

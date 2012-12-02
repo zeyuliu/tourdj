@@ -12,6 +12,7 @@ var UPDATE_ON_MAP_ZOOM = false;
 var sanFranciscoLatitude = 37.77456;
 var sanFranciscoLongitude = -122.433523;
 var sanFrancisco = new google.maps.LatLng(sanFranciscoLatitude, sanFranciscoLongitude);
+var DEF_ANIMATION = google.maps.Animation.DROP;
 
 var heatmap;
 /*
@@ -54,7 +55,8 @@ var all_points=[];
     
     var markerArray = setSampleMarkers();
     for (i = 0; i < markerArray.getLength(); i++){
-        markerArray.getAt(i).setMap(map)
+        markerArray.getAt(i).setMap(map);
+        
     }
 
     // Ask browser for it's location
@@ -103,15 +105,27 @@ function setSampleMarkers(map) {
 	    var markerOptions = {
 	        visible: true,
             position: sampleLocation,
+            animation: google.maps.Animation.DROP
         };
         markerArray[i] = new google.maps.Marker(markerOptions);
 	}
     return new google.maps.MVCArray(markerArray);
 }
+
+function ptsToMarkers(pts) {
+    markers = []
+    for (var i = 0; i < pts.length(); i++) {
+        var markerOptions = {
+            visible: true,
+            position: pts[i].location,
+            animation: DEF_ANIMATION
+        };
+        markers[i] = new google.maps.Marker(markerOptions);
+    }
+    return markers
+}
 // Loads the heatmap
 function loadHeatMap(maparray, clear) {
-    
-    
     
     console.log("in loadHeatMap");
 

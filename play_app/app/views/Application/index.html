@@ -43,7 +43,7 @@
   <body onload="initialize()">
 
     <!-- Navbar -->
-    <div class="navbar navbar-fixed-top">
+    <div class="navbar navbar-fixed-top .navbar-inverse">
       <div class="navbar-inner">
         <div class="container">
           <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -55,7 +55,28 @@
           <div class="nav-collapse">
             <ul class="nav gatext">
                <li class="active"><a href="/">Home</a></li>
-               <li><a href="/About">About</a></li>
+               <li class="dropdown">
+                <a class="dropdown-toggle"
+                   data-toggle="dropdown"
+                   href="#">
+                    Filter
+                  <b class="caret"></b>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <!-- links -->
+                    <li> <a id="by-start-time" href="/">Start time</a> </li>
+                    <li> <a id="by-theme" href="/">Theme</a> </li>
+                    <li class="dropdown-submenu">
+                        <a tabindex="-1" href="#">By Price</a>
+                        <ul class="dropdown-menu">
+                          <li> <a id="by-theme" href="/">Inexpensive</a> </li>
+                          <li> <a id="by-theme" href="/">Expensive</a> </li>
+                        </ul>
+                    </li>
+                    <li> <a id="by-price">href="/">Price</a> </li>
+
+                  </ul>
+              </li>
             </ul>
             
             <div id="referrerdiv" myreferrer='${referrer}' class="navbar-search facebook pull-right">              
@@ -81,6 +102,23 @@
       <!-- Footer  -->
       <div class="copyright" align="center">&copy; 2012 Angel Hack &#183; <font color=grey><a href="https://sf.angelhack.com"><u>link</u></a></font> 
       </div>
-    
+
+
+
+      <!-- Bootstrap Javascripts -->
+
+      <script src="/public/javascripts/bootstrap-transition.js"></script>
+      <script src="/public/javascripts/bootstrap-alert.js"></script>
+      <script src="/public/javascripts/bootstrap-modal.js"></script>
+      <script src="/public/javascripts/bootstrap-dropdown.js"></script>
+      <script src="/public/javascripts/bootstrap-scrollspy.js"></script>
+      <script src="/public/javascripts/bootstrap-tab.js"></script>
+      <script src="/public/javascripts/bootstrap-tooltip.js"></script>
+      <script src="/public/javascripts/bootstrap-popover.js"></script>
+      <script src="/public/javascripts/bootstrap-button.js"></script>
+      <script src="/public/javascripts/bootstrap-collapse.js"></script>
+      <script src="/public/javascripts/bootstrap-carousel.js"></script>
+      <script src="/public/javascripts/bootstrap-typeahead.js"></script>
+      
   </body>
 </html>

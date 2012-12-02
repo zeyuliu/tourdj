@@ -18,5 +18,13 @@ public class Application extends Controller {
         render();
     }
 
+    public static void put_tour_description() {
+        render();
+    }
+
+    public static void get_tour_description() {
+        render();
+    }
+
 
 }

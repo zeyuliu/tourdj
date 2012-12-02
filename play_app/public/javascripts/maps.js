@@ -211,7 +211,6 @@ function unmarkTours() {
     myDataRef.child('tours').on('child_removed', function(shot) {
         for (var i = 0; i < allTours.length; i++) {
             if (allTours[i] == shot.val()['name']) {
-                console.log("hidsjfkj");
                 allMarkers[i].setVisible(false);
                 allMarkers[i].setMap(null);
                 allTours.splice(i, 1);
@@ -277,7 +276,7 @@ function placeMarkersOnMap(markers, map) {
 function commitLocation() {
     pos = userMarker['position'];
     params = "latitude=" + pos.lat() + "&longitude=" + pos.lng();
-    window.location = "/drop?" + params;
+    window.location = "/gettour?" + params;
 }
 
 // Loads the heatmap

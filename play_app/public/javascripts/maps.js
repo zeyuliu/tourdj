@@ -17,9 +17,8 @@ var DEF_ANIMATION = google.maps.Animation.DROP;
 var myDataRef = new Firebase('https://timur.firebaseio.com/');
 
 var heatmap;
-
+var map;
 var userMarker;
-
 /*
 var testPointsData = toMapPts([
                     {location: {longitude: 37.774546, latitude: -122.433523}},
@@ -68,10 +67,8 @@ var all_points=[];
     userMarker.setMap(map);
     // Ask browser for it's location
     //ExecuteParse();
+    tours = markTours();
     
-    
-
-
     // listener to map zoom events, updates the heatmap (calls CallParse) if the flag UPDATE_ON_MAP_ZOOM is true
     google.maps.event.addListener(map, 'zoom_changed', function() {
         nowTime = new Date().getTime();
@@ -148,32 +145,35 @@ function addUserToFirebase(user) {
     myDataRef.child('users').child(user.id).set(user)
 }
 
-function getToursInLocation(location) {
-    tours = 0;
-    myDataRef.child('tours').child(location).once('value', function(shot) { 
-        tours = shot.val()})
-    return tours;
+function markTours() {
+    myDataRef.child('tours').on('value', function(shot) {
+        for (var tour in shot.val()){
+            markTour(shot.val()[tour]);
+        }
+    });
+}
+
+function markTour(tour) {
+    var markerOptions = {
+        visible: true,
+        position: new google.maps.LatLng(tour['latitude'], tour['longitude']),
+        animation: DEF_ANIMATION,
+        title: tour['desc'],
+        map: map
+    };
+    var marker = new google.maps.Marker(markerOptions);
 }
 
 function addUserToTour(user_id, tour_id, loc) {
-    myDataRef.child('tours').child(loc).child(tour_id).once('value', function(shot) {var tour = shot.val()})
-    tour['signed_up'] = (parseInt(tour['signed_up']) + 1).toString()
-    myDataRef.child('tours').child(loc).child(tour_id).set(tour)
+    myDataRef.child('tours').child(loc).child(tour_id).once('value', function(shot) {var tour = shot.val()});
+    tour['signed_up'] = (parseInt(tour['signed_up']) + 1).toString();
+    myDataRef.child('tours').child(loc).child(tour_id).set(tour);
 }
 
-function ptsToMarkers(pts) {
-    markers = []
-    for (var i = 0; i < pts.length(); i++) {
-        var markerOptions = {
-            visible: true,
-            position: pts[i]['location'],
-            animation: DEF_ANIMATION,
-            flat: false,
-            title: pts[i]['desc']
-        };
-        markers.push(new google.maps.Marker(markerOptions));
+function placeMarkersOnMap(markers, map) {
+    for (var i = 0; i < markers.length(); i++) {
+        markers[i].setMap(map);
     }
-    return markers
 }
 
 function commitLocation() {

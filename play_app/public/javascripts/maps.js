@@ -13,7 +13,7 @@ var sanFrancisco = new google.maps.LatLng(sanFranciscoLatitude, sanFranciscoLong
 var DEF_ANIMATION = google.maps.Animation.DROP;
 
 var myDataRef = new Firebase('https://timur.firebaseio.com/');
-
+var UserInfo;
 var heatmap;
 var map;
 var userMarker;
@@ -100,7 +100,6 @@ var all_points=[];
     //ExecuteParse();
     markTours();
     unmarkTours();
-    tryAccess();
     // listener to map zoom events, updates the heatmap (calls CallParse) if the flag UPDATE_ON_MAP_ZOOM is true
     google.maps.event.addListener(map, 'zoom_changed', function() {
         nowTime = new Date().getTime();
@@ -221,11 +220,11 @@ function unmarkTours() {
     });
 }
 
-function getUserID() {
-    var accessToken = $.cookie('account');
-    
-    request_url = "https://api.singly.com/profile?access_token=" + accessToken;
-    if (accessToken) {
+function getJSON() {
+    ACCESS_TOKEN = login();
+    request_url = "https://api.singly.com/profile?access_token=" + ACCESS_TOKEN
+    var info;
+    if (ACCESS_TOKEN) {
         $.ajax({
 
             url: request_url,
@@ -233,9 +232,7 @@ function getUserID() {
             dataType: "json",
             
             success: function (d) {
-                console.log(d['id']);
-                return d['id'];
-              
+                getJSONInfo(d);
             },
 
             error: function () {
@@ -243,11 +240,19 @@ function getUserID() {
             }
 
         });
-    }           
+    }
+
 }
 
-function tryAccess() {
-    myDataRef.child('users').once('value', function(shot) {console.log(shot.val())});
+
+function getJSONInfo(user) {
+    var r = myDataRef.child('users').child(user.id);
+    console.log(r.toString());
+    r.once('value', function(snapshot) { 
+        console.log(snapshot.val());
+        UserInfo = snapshot.val();
+    });
+
 }
 
 function markTour(tour) {

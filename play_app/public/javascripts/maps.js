@@ -13,6 +13,8 @@ var sanFranciscoLatitude = 37.77456;
 var sanFranciscoLongitude = -122.433523;
 var sanFrancisco = new google.maps.LatLng(sanFranciscoLatitude, sanFranciscoLongitude);
 
+var myDataRef = new Firebase('https://timur.firebaseio.com/');
+
 var heatmap;
 /*
 var testPointsData = toMapPts([
@@ -105,33 +107,16 @@ function setSampleMarkers(map) {
             position: sampleLocation,
         };
         markerArray[i] = new google.maps.Marker(markerOptions);
+        console.log(sampleLocation.lat());
+        //myDataRef.push({id: i, latitude: sampleLocation.lat(), longitude: sampleLocation.lng()});
+        //myDataRef.on('value', function(snapshot){ 
+            //console.log("AA" + snapshot.val().latitude);
+        //});
+
 	}
+    myDataRef.remove();
+
     return new google.maps.MVCArray(markerArray);
-}
-// Loads the heatmap
-function loadHeatMap(maparray, clear) {
-    
-    
-    
-    console.log("in loadHeatMap");
-
-    var pointArray = new google.maps.MVCArray(maparray);
-
-    var heatmap = new google.maps.visualization.HeatmapLayer({
-        data: pointArray,
-        radius: 12,
-        dissipating: true
-    });
-
-    heatmap.setMap(map);
-
-    if (clear) {
-        console.log("Called!");
-        heatmap.setMap(null);
-      }
-
-    // Check if we call this using the search bar
-    //if (toPan) map.panTo(new google.maps.LatLng(lat, lon));
 }
 
 
@@ -167,9 +152,9 @@ function toMapPts(points) {
 }
 
 // Function that sends queries to Parse.com
-function ExecuteParse(){
+function ExecuteFirebase(){
 
-    console.log("ExecuteParse");
+    console.log("ExecuteFirebase");
 
     var half_an_hour = 1800;
     var TimeShift = 3.5*3600;
@@ -178,19 +163,14 @@ function ExecuteParse(){
     var delta_time = (e.options[e.selectedIndex].value -1) * half_an_hour;
     console.log("delta_time= " + delta_time);
 
-    var Jams = Parse.Object.extend("Jams");
-    var query = new Parse.Query(Jams);
     var current_time = new Date().getTime() / 1000 - TimeShift;
 
     var lessThan = current_time - delta_time + 2*half_an_hour ;
     var greaterThan = current_time - delta_time;
 
-    query.greaterThan("creation_time", greaterThan);
-    query.lessThan("creation_time", lessThan);
-
     console.log("timeinterval", greaterThan, lessThan);
 
-
+    
 
     if (future == -1) {
             var Jams = Parse.Object.extend("Jams_Predictions");

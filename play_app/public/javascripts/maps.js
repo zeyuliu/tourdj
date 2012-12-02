@@ -19,6 +19,7 @@ var map;
 var userMarker;
 var allTours = [];
 var allMarkers = [];
+var listeners = [];
 /*
 var testPointsData = toMapPts([
                     {location: {longitude: 37.774546, latitude: -122.433523}},
@@ -186,8 +187,11 @@ function markTours() {
     myDataRef.child('tours').on('value', function(shot) {
         for (var tour in shot.val()){
             if (allTours.indexOf(tour) == -1){
-                markTour(shot.val()[tour]);
-                allTours.push(tour)
+                marker = markTour(shot.val()[tour]);
+                console.log(tour)
+                console.log("Well, one");
+                
+                allTours.push(tour);
             }
         }
     });
@@ -256,7 +260,18 @@ function markTour(tour) {
         title: tour['desc'],
         map: map
     };
-    allMarkers.push(new google.maps.Marker(markerOptions));
+    var newMarker = new google.maps.Marker(markerOptions);
+    allMarkers.push(newMarker);
+    
+    google.maps.event.addListener(newMarker, 'click', function(mouseEvent) {
+                    infoWindowOptions = {
+                        content: tour['description']
+                    };
+                    console.log(tour);
+                    infoWindow = new google.maps.InfoWindow(infoWindowOptions);
+                    infoWindow.open(map, newMarker);
+    });
+    return newMarker;
 }
 
 function addUserToTour(user_id, tour_id, loc) {

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<!-- HEAD -->
+  <head>
+    
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+
+    <!-- Map Canvas css -->
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+      #map_canvas { height: 100% }
+    </style>
+
+    
+    <!-- Google Maps init -->
+    <script type="text/javascript"
+       src="https://maps.googleapis.com/maps/api/js?&sensor=false&libraries=visualization">
+    </script>    
+
+    <!-- Firebase init -->
+    <script type='text/javascript' src='https://static.firebase.com/v0/firebase.js'></script>
+    <script src="/public/javascripts/maps.js"></script>
+
+    <!-- Additional CSS -->
+    <title>Tour.dj</title>
+    <meta name="description" content="Realtime tours map">
+    <meta name="author" content="Science HackDay 2012">
+
+    <link rel="stylesheet" type="text/css" href="/public/stylesheets/bootstrap.css" />
+    <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
+
+
+
+  </head>
+  
+  <!-- BODY -->
+  <body onload="initialize()">
+    <!-- Navbar -->
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/Home" style="margin-left: 30px"><b>Tour.dj</b></a>
+          <div class="nav-collapse">
+            <ul class="nav gatext">
+               <li class="active"><a href="/">Home</a></li>
+               <li><a href="/About">Drop</a></li>
+            </ul>
+            
+            <div id="referrerdiv" myreferrer='${referrer}' class="navbar-search facebook pull-right">
+                
+                <a style="margin-right: 10px; width: 80px" class="btn btn-yellow btntext btnmarg" href="#"></i>Sign Up</a> 
+                <a style="margin-right: 100px; width: 80px" class="btn btn-warning btntext btnmarg" href="#"></i>Login</a> 
+              
+
+            </div>
+         </div>
+
+
+        </div>
+      </div>
+    </div>
+
+
+      <!-- The Maps -->
+      <div style="top: 0px" id="map_canvas" style="width:100%">
+      </div>
+
+      <!-- Footer  -->
+      <div class="copyright" align="center">&copy; 2012 Angel Hack &#183; <font color=grey><a href="https://sf.angelhack.com"><u>link</u></a></font> 
+      </div>
+    
+  </body>
+</html>

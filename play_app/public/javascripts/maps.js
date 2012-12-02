@@ -115,7 +115,6 @@ function setSampleMarkers(map) {
         var sampleLocation = new google.maps.LatLng(sanFranciscoLatitude + offset, sanFranciscoLongitude + offset);
 	    var markerOptions = {
 	        visible: true,
-	        draggable: true,
             position: sampleLocation,
             animation: google.maps.Animation.DROP,
             title: 'test'
@@ -124,6 +123,7 @@ function setSampleMarkers(map) {
 	}
     return new google.maps.MVCArray(markerArray);
 }
+
 
 function centerMarker() {
     var markerOptions = {
@@ -150,7 +150,8 @@ function addUserToFirebase(user) {
 
 function getToursInLocation(location) {
     tours = 0;
-    myDataRef.child('tours').child(location).once('value', function(shot) { tours = shot.val()})
+    myDataRef.child('tours').child(location).once('value', function(shot) { 
+        tours = shot.val()})
     return tours;
 }
 

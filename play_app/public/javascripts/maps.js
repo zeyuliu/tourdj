@@ -17,6 +17,7 @@ var myDataRef = new Firebase('https://timur.firebaseio.com/');
 var heatmap;
 var map;
 var userMarker;
+var allMarkers = [];
 /*
 var testPointsData = toMapPts([
                     {location: {longitude: 37.774546, latitude: -122.433523}},
@@ -197,7 +198,10 @@ function addUserToFirebase(user) {
 function markTours() {
     myDataRef.child('tours').on('value', function(shot) {
         for (var tour in shot.val()){
-            markTour(shot.val()[tour]);
+            if (allMarkers.indexOf(tour) == -1){
+                markTour(shot.val()[tour]);
+                allMarkers.push(tour)
+            }
         }
     });
 }

@@ -86,6 +86,13 @@ function initializelogin() {
 }
 
 function logout() {
+	access_token = $.cookie('account');
+	logouturl = "https://api.singly.com/logout?access_token=" + access_token;
+	$.ajax({
+
+		    url: logouturl
+
+	});
 	$.removeCookie('account', { path: '/' });
 	window.location.href = "http://localhost:9000/";
 }

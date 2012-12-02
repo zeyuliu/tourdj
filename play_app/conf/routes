@@ -11,6 +11,15 @@ GET     /home                                       Application.index
 GET     /Drop                                       Application.droppin
 GET     /drop                                       Application.droppin
 
+# Put tour description
+GET     /Puttour                                       Application.put_tour_description
+GET     /puttour                                       Application.put_tour_description
+
+# Get tour description
+GET     /Gettour                                       Application.get_tour_description
+GET     /gettour                                       Application.get_tour_description
+
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

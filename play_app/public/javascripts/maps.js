@@ -271,6 +271,7 @@ function markTour(tour) {
                     console.log(tour);
                     infoWindow = new google.maps.InfoWindow(infoWindowOptions);
                     infoWindow.open(map, newMarker);
+                    map.setCenter(newMarker.getPosition());
     });
     return newMarker;
 }

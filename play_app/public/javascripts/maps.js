@@ -94,8 +94,6 @@ var all_points=[];
         
     }
     */
-    userMarker = centerMarker();
-    userMarker.setMap(map);
     // Ask browser for it's location
     //ExecuteParse();
     markTours();
@@ -156,35 +154,22 @@ function addToFirebase(key, value) {
     myDataRef.child(key).set(value)
 }
 
-function setSampleMarkers(map) {
-	
-    var sampleNumber = 11;
-    var sampleDistance = .001;
-    var markerArray = new Array();
-	for (var i = 0; i < sampleNumber; i++) {
-        var offset = sampleDistance * (i - (sampleNumber / 2));
-        var sampleLocation = new google.maps.LatLng(sanFranciscoLatitude + offset, sanFranciscoLongitude + offset);
-	    var markerOptions = {
-	        visible: true,
-            position: sampleLocation,
-            animation: google.maps.Animation.DROP,
-            title: 'test'
-        };
-        markerArray[i] = new google.maps.Marker(markerOptions);
-	}
-    return new google.maps.MVCArray(markerArray);
-}
-
-
 function centerMarker() {
     var markerOptions = {
         visible: true,
         draggable: true,
         position: map.getCenter(),
         animation: google.maps.Animation.DROP,
-        title: 'Where do you want to tour?'
+        title: 'Where do you want to tour?',
+        map: map
     };
     return new google.maps.Marker(markerOptions);
+}
+
+function transition() {
+    userMarker = centerMarker();
+    document.getElementById('chooseLocation').onclick = commitLocation;
+    document.getElementById('chooseLocation').innerHTML = 'Make a tour!';
 }
 
 function addTourToFirebase(tour) {

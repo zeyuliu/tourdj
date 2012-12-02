@@ -54,13 +54,15 @@ var all_points=[];
     var MIN_INTERVAL_MLSEC = 1800; 
     // initial zoom
     var current_zoom = 12;
-    
+    /*
     var markerArray = setSampleMarkers();
     for (i = 0; i < markerArray.getLength(); i++){
         markerArray.getAt(i).setMap(map);
         
     }
-
+    */
+    var marker = centerMarker();
+    marker.setMap(map);
     // Ask browser for it's location
     //ExecuteParse();
     
@@ -119,8 +121,20 @@ function setSampleMarkers(map) {
     return new google.maps.MVCArray(markerArray);
 }
 
-function addTourToFirebase(location, tour) {
-    myDataRef.child('tours').child(location).child(tour['id']).set(tour)
+
+function centerMarker() {
+    var markerOptions = {
+        visible: true,
+        draggable: true,
+        position: map.getCenter(),
+        animation: google.maps.Animation.DROP,
+        title: 'Where do you want to tour?'
+    };
+    return new google.maps.Marker(markerOptions);
+}
+
+function addTourToFirebase(tour) {
+    myDataRef.child('tours').child(tour['name']).set(tour)
 }
 
 function removeTourFromFirebase(location, tour_id) {

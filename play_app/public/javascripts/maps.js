@@ -244,7 +244,8 @@ function getJSONInfo(user, pos) {
         
         userInfo = snapshot.val();
         var name = userInfo['name'];
-        params = "latitude=" + pos.lat() + "&longitude=" + pos.lng() + "&name=" + name;
+        var img = userInfo['services']['facebook']['thumbnail_url'];
+        params = "latitude=" + pos.lat() + "&longitude=" + pos.lng() + "&name=" + name + "&url=" + img;
         console.log(snapshot.val());
         
         window.location = "/gettour?" + params;

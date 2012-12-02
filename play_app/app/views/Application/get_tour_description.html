@@ -4,14 +4,9 @@
 <!-- HEAD -->
   <head>
     <script src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
-    <script type = "text/javascript">
-      function login() {
-        var button = document.getElementById('login')
-        window.open ("https://api.singly.com/oauth/authorize?client_id=176be91da9c1b06fa18ce0ec18241419&service=facebook&redirect_uri=http://localhost:9000%2Fauthorized.html&scope=email&response_type=token","Login","menubar=1,resizable=1,width=700,height=500");
-      }
+    <script src="/public/javascripts/jquery.cookie.js"></script>
+    <script src="/public/javascripts/authenticate.js"></script>
 
-
-    </script>
     <script type='text/javascript' src='https://static.firebase.com/v0/firebase.js'></script>
     <script type="text/javascript"
        src="https://maps.googleapis.com/maps/api/js?&sensor=false&libraries=visualization">
@@ -44,8 +39,7 @@
   </head>
   
   <!-- BODY -->
-  <body onload="initializePic()">
-
+  <body onload="initializePic();initializelogin()">
     <!-- Navbar -->
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
@@ -64,7 +58,7 @@
             
             <div id="referrerdiv" myreferrer='${referrer}' class="navbar-search facebook pull-right">
 
-                <a style="margin-right: 100px; width: 80px" class="btn btn-warning btntext btnmarg" href="javascript:login()" id="login"></i>Login</a>
+                <a style="margin-right: 100px; width: 80px" class="btn btn-warning btntext btnmarg" href="javascript: logout()"><b>Logout</b></a> 
 
             </div>
          </div>    

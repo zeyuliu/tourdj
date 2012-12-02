@@ -59,7 +59,7 @@ function importToFirebase() {
 		return;
 	}
 	else {
-		$.cookie('account', ACCESS_TOKEN);
+		$.cookie('account', ACCESS_TOKEN, { path: '/' });
 	}
 
 }
@@ -72,4 +72,20 @@ function initializelogin() {
 	isLoggedIn();
 	login();
 	importToFirebase();
+	if (isLoggedIn()) {
+		if (window.location.href == "http://localhost:9000/" || window.location.href == "http://localhost:9000/Home") {
+			window.location.href = '/drop';
+		};
+		
+	}
+	else {
+		if (window.location.href != "http://localhost:9000/") {
+			window.location.href = "http://localhost:9000/";
+		};
+	}
+}
+
+function logout() {
+	$.removeCookie('account', { path: '/' });
+	window.location.href = "http://localhost:9000/";
 }

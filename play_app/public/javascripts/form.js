@@ -10,9 +10,19 @@ function submit() {
     var tLatitude = params[0].substring(params[0].indexOf('=') + 1);
     var tLongitude = params[1].substring(params[1].indexOf('=') + 1);
     var tGuideName = params[2].substring(params[2].indexOf('=') + 1);
-    //var tImage = document.getElementById('tour-image').value;
-    var totalDesc = "Guide: " + tGuideName.replace('%20', ' ') + "<br>" + "Description: " + tDesc;
+    var tGuidePic = params[3].substring(params[3].indexOf('=') + 1);
+    var totalDesc = "<table border='1'><tr><td><img src='" + tGuidePic + "' width='50px'></img></td></tr><tr><td>Guide: " + tGuideName.replace('%20', ' ') + "</td><td>Description: " + tDesc + "</td></tr></table>";
     var tour = {name:tName, startTime:tStartTime, description:totalDesc, audioURL:tAudio, videoURL:tVideo, latitude:tLatitude, longitude:tLongitude, tourGuideName:tGuideName};
     addTourToFirebase(tour);
     window.location = "/drop"
+}
+
+function initializePic() {
+    var params = window.location.search.split('&');
+    var tLatitude = params[0].substring(params[0].indexOf('=') + 1);
+    var tLongitude = params[1].substring(params[1].indexOf('=') + 1);
+    var tGuideName = params[2].substring(params[2].indexOf('=') + 1);
+    var tGuidePic = params[3].substring(params[3].indexOf('=') + 1);
+
+    var picture = document.getElementById('tour-image').src = tGuidePic;
 }

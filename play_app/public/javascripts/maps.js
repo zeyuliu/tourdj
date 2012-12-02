@@ -119,8 +119,8 @@ function setSampleMarkers(map) {
     return new google.maps.MVCArray(markerArray);
 }
 
-function addTourToFirebase(location, tour) {
-    myDataRef.child('tours').child(location).child(tour['id']).set(tour)
+function addTourToFirebase(tour) {
+    myDataRef.child('tours').child(tour['name']).set(tour)
 }
 
 function removeTourFromFirebase(location, tour_id) {

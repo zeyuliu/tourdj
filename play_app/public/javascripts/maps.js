@@ -17,6 +17,9 @@ var DEF_ANIMATION = google.maps.Animation.DROP;
 var myDataRef = new Firebase('https://timur.firebaseio.com/');
 
 var heatmap;
+
+var userMarker;
+
 /*
 var testPointsData = toMapPts([
                     {location: {longitude: 37.774546, latitude: -122.433523}},
@@ -61,8 +64,8 @@ var all_points=[];
         
     }
     */
-    var marker = centerMarker();
-    marker.setMap(map);
+    userMarker = centerMarker();
+    userMarker.setMap(map);
     // Ask browser for it's location
     //ExecuteParse();
     
@@ -112,7 +115,6 @@ function setSampleMarkers(map) {
         var sampleLocation = new google.maps.LatLng(sanFranciscoLatitude + offset, sanFranciscoLongitude + offset);
 	    var markerOptions = {
 	        visible: true,
-	        draggable: true,
             position: sampleLocation,
             animation: google.maps.Animation.DROP,
             title: 'test'
@@ -121,6 +123,7 @@ function setSampleMarkers(map) {
 	}
     return new google.maps.MVCArray(markerArray);
 }
+
 
 function centerMarker() {
     var markerOptions = {
@@ -147,7 +150,8 @@ function addUserToFirebase(user) {
 
 function getToursInLocation(location) {
     tours = 0;
-    myDataRef.child('tours').child(location).once('value', function(shot) { tours = shot.val()})
+    myDataRef.child('tours').child(location).once('value', function(shot) { 
+        tours = shot.val()})
     return tours;
 }
 
@@ -171,6 +175,13 @@ function ptsToMarkers(pts) {
     }
     return markers
 }
+
+function commitLocation() {
+    pos = userMarker['position'];
+    params = "latitude=" + pos.lat() + "&longitude=" + pos.lng();
+    window.location = "/drop?" + params;
+}
+
 // Loads the heatmap
 function loadHeatMap(maparray, clear) {
     

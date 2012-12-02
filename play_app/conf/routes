@@ -4,6 +4,12 @@
 
 # Home page
 GET     /                                       Application.index
+GET     /Home                                       Application.index
+GET     /home                                       Application.index
+
+# Drop pin
+GET     /Drop                                       Application.droppin
+GET     /drop                                       Application.droppin
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

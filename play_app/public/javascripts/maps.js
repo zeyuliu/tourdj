@@ -96,6 +96,10 @@ var all_points=[];
     });
 }
 
+function addToFirebase(key, value) {
+    myDataRef.child(key).set(value)
+}
+
 function setSampleMarkers(map) {
 	
     var sampleNumber = 11;
@@ -107,11 +111,36 @@ function setSampleMarkers(map) {
 	    var markerOptions = {
 	        visible: true,
             position: sampleLocation,
-            animation: google.maps.Animation.DROP
+            animation: google.maps.Animation.DROP,
+            title: 'test'
         };
         markerArray[i] = new google.maps.Marker(markerOptions);
 	}
     return new google.maps.MVCArray(markerArray);
+}
+
+function addTourToFirebase(location, tour) {
+    myDataRef.child('tours').child(location).child(tour['id']).set(tour)
+}
+
+function removeTourFromFirebase(location, tour_id) {
+    myDataRef.child('tours').child(location).child(tour_id).remove()
+}
+
+function addUserToFirebase(user) {
+    myDataRef.child('users').child(user.id).set(user)
+}
+
+function getToursInLocation(location) {
+    tours = 0;
+    myDataRef.child('tours').child(location).once('value', function(shot) { tours = shot.val()})
+    return tours;
+}
+
+function addUserToTour(user_id, tour_id, loc) {
+    myDataRef.child('tours').child(loc).child(tour_id).once('value', function(shot) {var tour = shot.val()})
+    tour['signed_up'] = (parseInt(tour['signed_up']) + 1).toString()
+    myDataRef.child('tours').child(loc).child(tour_id).set(tour)
 }
 
 function ptsToMarkers(pts) {
@@ -119,10 +148,12 @@ function ptsToMarkers(pts) {
     for (var i = 0; i < pts.length(); i++) {
         var markerOptions = {
             visible: true,
-            position: pts[i].location,
-            animation: DEF_ANIMATION
+            position: pts[i]['location'],
+            animation: DEF_ANIMATION,
+            flat: false,
+            title: pts[i]['desc']
         };
-        markers[i] = new google.maps.Marker(markerOptions);
+        markers.push(new google.maps.Marker(markerOptions));
     }
     return markers
 }

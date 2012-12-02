@@ -4,9 +4,7 @@ A file with javascript functions handling the map-related stuff
 
 // GLOBAL VARIABLES
 
-// Parse Javascript SDK
-var APPLICATION_ID = "IvhmmcSzZqySg27Bh50pEVn8aqUSvUNww09d0xkA";
-var JAVASCRIPT_KEY = "er7Hxr16oNQnK2PBYOaaW6k5k8alGxdCMrBnulAp";
+var map;
 
 var UPDATE_ON_MAP_ZOOM = false;
 var sanFranciscoLatitude = 37.77456;
@@ -39,11 +37,39 @@ var all_points=[];
     // put Berkeley as a first viewed city on the map
     var center = sanFrancisco;
 
+    getLocation();
+
+
+    var styles = [
+      {
+        stylers: [
+          { hue: "#0A2389" },
+          { saturation: -10 }
+        ]
+      },{
+        featureType: "road",
+        elementType: "geometry",
+        stylers: [
+          { lightness: 100 },
+          { visibility: "simplified" }
+        ]
+      },{
+        featureType: "road",
+        elementType: "labels",
+        stylers: [
+          { visibility: "off" }
+        ]
+      }
+    ];
+
     // set up map options
     var mapOptions = {
         zoom: 12,
         center: center,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+                        mapTypeControl: false,
+                        streetViewControl: false,
+                        styles: styles
     };
 
     map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
@@ -97,6 +123,29 @@ var all_points=[];
 
     });
 }
+
+
+// Fetches raw data containing points info. Gets user's browser location.
+function getLocation() {
+
+    console.log("in getLocation");
+
+    if (navigator.geolocation) {
+        watchRef = navigator.geolocation.watchPosition(geolocate, null, {enableHighAccuracy: true});
+        console.log("in geoLocation");
+    } else {
+        alert("Oops. Looks like your location can't be fetched.");
+    }
+}
+
+function geolocate(position) {
+    console.log("in geolocation");
+    map.panTo(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+    if (position.coords.accuracy < 100) {
+        navigator.geolocation.clearWatch(watchRef);
+    }
+}
+
 
 function addToFirebase(key, value) {
     myDataRef.child(key).set(value)

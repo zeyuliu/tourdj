@@ -15,14 +15,6 @@
 
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 
-    <!-- Map Canvas css -->
-    <style type="text/css">
-      html { height: 100% }
-      body { height: 100%; margin: 0; padding: 0 }
-      #map_canvas { height: 100% }
-    </style>
-
-    
     <!-- Google Maps init -->
     <script type="text/javascript"
        src="https://maps.googleapis.com/maps/api/js?&sensor=false&libraries=visualization">
@@ -35,7 +27,7 @@
     <!-- Additional CSS -->
     <title>Tour.dj</title>
     <meta name="description" content="Realtime tours map">
-    <meta name="author" content="Science HackDay 2012">
+    <meta name="author" content="AngelHack 2012">
 
     <link rel="stylesheet" type="text/css" href="/public/stylesheets/bootstrap.css" />
     <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
@@ -46,7 +38,7 @@
   </head>
   
   <!-- BODY -->
-  <body onload="initialize()">
+  <body>
 
     <!-- Navbar -->
     <div class="navbar navbar-fixed-top">
@@ -59,34 +51,94 @@
           </a>
           <a class="brand" href="/Home" style="margin-left: 30px"><b>Tour.dj</b></a>
           <div class="nav-collapse">
-            <ul class="nav gatext">
+            <ul class="nav">
                <li class="active"><a href="/">Home</a></li>
                <li><a href="/About">About</a></li>
             </ul>
             
             <div id="referrerdiv" myreferrer='${referrer}' class="navbar-search facebook pull-right">
-                
 
-
-                <!-- <a style="margin-right: 10px; width: 80px" class="btn btn-yellow btntext btnmarg" href="#" id="signup"></i>Sign Up</a> -->
                 <a style="margin-right: 100px; width: 80px" class="btn btn-warning btntext btnmarg" href="javascript:login()" id="login"></i>Login</a>
 
             </div>
-         </div>
-         
-
+         </div>    
 
         </div>
       </div>
-      <br>
-      <a style="margin-left: 100px; width: 80px" class="btn btn-warning btntext btnmarg" href="#" onclick="commitLocation()"></i>Create a New Tour</a>
     </div>
 
 
-      <!-- The Maps -->
-      <div style="top: 0px" id="map_canvas" style="width:100%">
-      </div>
+      <!-- Input Fields -->
+      <div class="container-fluid" style="margin-top:50px">
+        <div class="row-fluid">
+          <a href="/"> 
+          <div class="span2" style="height:133px; border:1px solid #000; margin-top:15px">
+            <!-- Left Panel-->
+            <center>
+            <p style="margin-top:10px">Add photo</p>
+            </center>
+          </div>
+        </a>
+          <div class="span9" style="float:right;margin-top:15px">
+            <!-- Right panel-->
 
+            <!-- name -->
+            <blockquote>
+              <p><h3>*Name </h3></p>
+            </blockquote>
+            
+            <input id="tour-name" class="input-block-level" type="text" placeholder="Input Tour Name">
+
+            <!-- start time -->
+            <blockquote>
+              <p><h3>*Choose start time: </h3></p>
+            </blockquote>
+
+            <select id="tour-start-time" style="float-left">
+              <option>30 min from now/option>
+              <option>1 hr from now</option>
+              <option>2 hrs from now</option>
+              <option>3 hrs from now</option>
+              <option>5 hrs from now</option>
+            </select>
+
+
+          </div>
+
+          <!-- Tour Description -->
+
+          <div id="tour-description" class="span12" style="align:center; margin-top: 20px">
+            <blockquote>
+              <p><h3>* Tour Description </h3></p>
+            </blockquote>
+            <textarea rows="3" style="width:inherit; margin-right: 200px"></textarea>
+          </div>
+
+          <!-- Upload Audio -->
+
+          <div id="tour-audio" class="span12" style="align:center; margin-top: 20px">
+            <blockquote>
+              <p><h3>Audio Description </h3></p>
+            </blockquote>
+            <a style="margin-right: 100px; width: 80px" class="btn btn-primary btntext btnmarg disabled" href="#" id="audio-upload"></i>Upload File</a>
+          </div>
+
+          <!-- Upload Video -->
+
+          <div id="tour-video" class="span12" style="align:center; margin-top: 20px">
+            <blockquote>
+              <p><h3>Video Description </h3></p>
+            </blockquote>
+            <input class="input-block-level" type="text" placeholder="Paste Youtube Link">
+          </div>
+
+           <!-- Submit Button -->
+          <div id="tour-submit" class="span12" style="float:center; margin-top: 20px">
+            <a style="margin-right: 100px; width: 80px; float:right" class="btn btn-warning btntext btnmarg disabled" href="#" id="audio-upload">SUBMIT THE TOUR!</a>
+          </div>
+
+        </div>
+      </div>
       <!-- Footer  -->
       <div class="copyright" align="center">&copy; 2012 Angel Hack &#183; <font color=grey><a href="https://sf.angelhack.com"><u>link</u></a></font> 
       </div>

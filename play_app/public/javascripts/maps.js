@@ -110,6 +110,7 @@ function setSampleMarkers(map) {
         var sampleLocation = new google.maps.LatLng(sanFranciscoLatitude + offset, sanFranciscoLongitude + offset);
 	    var markerOptions = {
 	        visible: true,
+	        draggable: true,
             position: sampleLocation,
             animation: google.maps.Animation.DROP,
             title: 'test'

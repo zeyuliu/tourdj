@@ -88,11 +88,8 @@ function initializelogin() {
 function logout() {
 	access_token = $.cookie('account');
 	logouturl = "https://api.singly.com/logout?access_token=" + access_token;
-	$.ajax({
-
-		    url: logouturl
-
-	});
+	var popup = window.open(logouturl,"Logout","menubar=1,resizable=1,width=200,height=100");
+	setTimeout(popup.close(), 2000);
 	$.removeCookie('account', { path: '/' });
 	window.location.href = "http://localhost:9000/";
 }

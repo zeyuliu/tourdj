@@ -17,6 +17,9 @@ var DEF_ANIMATION = google.maps.Animation.DROP;
 var myDataRef = new Firebase('https://timur.firebaseio.com/');
 
 var heatmap;
+
+var userMarker;
+
 /*
 var testPointsData = toMapPts([
                     {location: {longitude: 37.774546, latitude: -122.433523}},
@@ -61,8 +64,8 @@ var all_points=[];
         
     }
     */
-    var marker = centerMarker();
-    marker.setMap(map);
+    userMarker = centerMarker();
+    userMarker.setMap(map);
     // Ask browser for it's location
     //ExecuteParse();
     
@@ -171,6 +174,12 @@ function ptsToMarkers(pts) {
     }
     return markers
 }
+
+function commitLocation() {
+    params['position'] = userMarker['position'];
+    window.location = "/drop";
+}
+
 // Loads the heatmap
 function loadHeatMap(maparray, clear) {
     

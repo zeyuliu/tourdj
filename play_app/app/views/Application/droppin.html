@@ -3,7 +3,11 @@
 
 <!-- HEAD -->
   <head>
-    
+    <!-- Import Jquery and Cookie System -->
+    <script src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
+    <script src="/public/javascripts/jquery.cookie.js"></script>
+    <script src="/public/javascripts/authenticate.js"></script>
+
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 
     <!-- Map Canvas css -->
@@ -56,8 +60,7 @@
             
             <div id="referrerdiv" myreferrer='${referrer}' class="navbar-search facebook pull-right">
                 
-                <a style="margin-right: 10px; width: 80px" class="btn btn-yellow btntext btnmarg" href="#"></i>Sign Up</a> 
-                <a style="margin-right: 100px; width: 80px" class="btn btn-warning btntext btnmarg" href="#"></i>Login</a> 
+                <a style="margin-right: 100px; width: 80px" class="btn btn-warning btntext btnmarg" href="#"></i>Logout</a> 
               
 
             </div>
@@ -66,6 +69,10 @@
 
         </div>
       </div>
+
+      <br>
+      <a style="margin-left: 100px; width: 80px" class="btn btn-warning btntext btnmarg" href="#" onclick="commitLocation()"></i><b>Create a Tour</b></a>
+
     </div>
 
 

@@ -37,6 +37,9 @@ var all_points=[];
 
   function initialize() {
 
+    // Initializes session-login via cookies
+    initializelogin();
+
     console.log("in initialize");
     // put Berkeley as a first viewed city on the map
     var center = sanFrancisco;
@@ -191,10 +194,6 @@ function addTourToFirebase(tour) {
 
 function removeTourFromFirebase(tour_id) {
     myDataRef.child('tours').child(tour_id).remove()
-}
-
-function addUserToFirebase(user) {
-    myDataRef.child('users').child(user.id).set(user)
 }
 
 function markTours() {
